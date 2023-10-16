@@ -20,12 +20,7 @@ archives:
     format: zip
     name_template: >-
       {{- .ProjectName }}_
-      {{- if eq .Os "darwin" }}macos
-      {{- else }}{{ .Os }}_{{ end -}}
-      {{- if eq .Arch "amd64" }}x86_64
-      {{- else if eq .Arch "386" }}i386
-      {{- else }}{{ .Arch }}{{ end }}
-      {{- if .Arm }}v{{ .Arm }}{{ end -}}
+      {{- if eq .Os "darwin" }}macos{{ end -}}
 
 checksum:
   disable: true
@@ -59,7 +54,7 @@ brews:
   - # Name template of the recipe
     name: gon
     folder: Formula
-    tap:
+    repository:
       owner: Bearer
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
