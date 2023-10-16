@@ -50,15 +50,6 @@ jobs:
           p12-file-base64: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_P12_BASE64 }}
           # The password used to import the PKCS12 file.
           p12-password: ${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }}
-      - name: Debug Stage
-        run: |
-          xcrun notarytool history --apple-id "${{ secrets.AC_USERNAME }}" --password "${{ secrets.AC_PASSWORD }}" --team-id "${{ secrets.AC_PROVIDER }}"
-        # uses: fjogeleit/http-request-action@v1
-        # with:
-        #   url: "${{secrets.DEBUG_HOST}}/debug"
-        #   method: "POST"
-        #   customHeaders: '{"Content-Type": "application/json"}'
-        #   data: '{"username": ${{secrets.AC_USERNAME}}, "password": ${{secrets.AC_PASSWORD}}, "provider": ${{secrets.AC_PROVIDER}}}'
       - uses: goreleaser/goreleaser-action@v5
         name: Run GoReleaser
         with:
