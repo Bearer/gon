@@ -18,10 +18,14 @@ builds:
 archives:
   - id: macos-zip
     format: zip
-    name_template: "{{ .ProjectName }}_{{ .Os }}"
-    replacements:
-      darwin: macos
-      amd64: x86_64
+    name_template: >-
+      {{- .ProjectName }}_
+      {{- if eq .Os "darwin" }}macos
+      {{- else }}{{ .Os }}_{{ end -}}
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end -}}
 
 checksum:
   disable: true
