@@ -148,7 +148,6 @@ bundle_id = "com.mitchellh.example.terraform"
 
 apple_id {
   username = "mitchell@example.com"
-  password = "@env:AC_PASSWORD"
   provider = "UL304B4VGY"
 }
 
@@ -172,7 +171,6 @@ zip {
     "bundle_id" : "com.mitchellh.example.terraform",
     "apple_id": {
         "username" : "mitchell@example.com",
-        "password":  "@env:AC_PASSWORD",
         "provider":  "UL304B4VGY"
     },
     "sign" :{
@@ -207,14 +205,9 @@ Supported configurations:
     * `username` (`string`) - The Apple ID username, typically an email address.
       This will default to the `AC_USERNAME` environment variable if not set.
 
-    * `password` (`string`) - The password for the associated Apple ID. This can be
-      specified directly or using `@keychain:<name>` or `@env:<name>` to avoid
-      putting the plaintext password directly in a configuration file. The `@keychain:<name>`
-      syntax will load the password from the macOS Keychain with the given name.
-      The `@env:<name>` syntax will load the password from the named environmental
-      variable. If this value isn't set, we'll attempt to use the `AC_PASSWORD`
-      environment variable as a default.
-      
+    * `password` (`string`) - The password for the associated Apple ID.
+      This will default to the `AC_PASSWORD` environment variable if not set.
+
       **NOTE**: If you have 2FA enabled, the password must be an application password, not
       your normal apple id password. See [Troubleshooting](#troubleshooting) for details.
 
@@ -298,7 +291,6 @@ notarize {
 
 apple_id {
   username = "mitchell@example.com"
-  password = "@env:AC_PASSWORD"
 }
 ```
 
@@ -312,7 +304,6 @@ apple_id {
 
   "apple_id": {
      "username": "mitchell@example.com",
-     "password": "@env:AC_PASSWORD"
   }
 }
 ```

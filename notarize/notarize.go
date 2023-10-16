@@ -19,9 +19,7 @@ type Options struct {
 	// DeveloperId is your Apple Developer Apple ID.
 	DeveloperId string
 
-	// Password is your Apple Connect password. This must be specified.
-	// This also supports `@keychain:<value>` and `@env:<value>` formats to
-	// read from the keychain and environment variables, respectively.
+	// Password is the password associated to your Apple Developer Apple ID.
 	Password string
 
 	// Provider is the Apple Connect provider to use. This is optional

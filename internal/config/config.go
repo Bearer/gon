@@ -36,11 +36,8 @@ type AppleId struct {
 	// be read from the environment via AC_USERNAME if not specified via config.
 	Username string `hcl:"username,optional"`
 
-	// Password is the password for your AC account. This also accepts
-	// two additional forms: '@keychain:<name>' which reads the password from
-	// the keychain and '@env:<name>' which reads the password from an
-	// an environmental variable named <name>. If omitted, it has the same effect
-	// as passing '@env:AC_PASSWORD'.
+	// Password associated to your Apple ID. This is required, but will
+	// be read from the environment via AC_PASSWORD if not specified via config.
 	Password string `hcl:"password,optional"`
 
 	// Provider is the AC provider. This is optional and only needs to be
