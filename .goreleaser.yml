@@ -30,8 +30,9 @@ signs:
   - signature: "${artifact}_macos.zip"
     ids:
       - macos
-    cmd: gon
+    cmd: xcrun notarytool history --apple-id "{{ .Env.AC_USERNAME }}" --password "{{ .Env.AC_PASSWORD }}" --team-id "{{ .Env.AC_PROVIDER }}" && gon
     args:
+      - -log-level=debug
       - .gon.hcl
     artifacts: all
 
