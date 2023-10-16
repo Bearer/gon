@@ -32,6 +32,7 @@ signs:
       - macos
     cmd: gon
     args:
+      - -log-level=info -log-json
       - .gon.hcl
     artifacts: all
 
