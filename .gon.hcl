@@ -3,6 +3,7 @@ bundle_id = "com.bearer.gon"
 
 apple_id {
   password = "@env:AC_PASSWORD"
+  provider = "5T2VP4YAG8"
 }
 
 sign {
