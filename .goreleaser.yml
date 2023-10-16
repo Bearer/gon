@@ -1,5 +1,8 @@
 env:
   - GO111MODULE=on
+  - AC_USERNAME={{ .Env.AC_USERNAME }}
+  - AC_PASSWORD={{ .Env.AC_PASSWORD }}
+  - AC_PROVIDER={{ .Env.AC_PROVIDER }}
 
 before:
   hooks:
