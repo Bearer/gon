@@ -16,13 +16,12 @@ builds:
     dir: ./cmd/gon/
 
 archives:
-  - id: macos-zip
+  - id: macos
     format: zip
     name_template: >-
       {{- .ProjectName }}_
-      {{- if eq .Os "darwin" }}macos
-      {{- else }}{{ .Os }}_{{ end -}}
-      {{- if eq .Arch "amd64" }}x86_64
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}macos
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end -}}
@@ -30,14 +29,14 @@ archives:
 checksum:
   disable: true
 
-signs:
-  - signature: "${artifact}_macos.dmg"
-    ids:
-      - macos-zip
-    cmd: gon
-    args:
-      - .gon.hcl
-    artifacts: all
+# signs:
+#   - signature: "${artifact}_macos.dmg"
+#     ids:
+#       - macos
+#     cmd: gon
+#     args:
+#       - .gon.hcl
+#     artifacts: all
 
 snapshot:
   name_template: "{{ .Tag }}-next"
@@ -59,7 +58,7 @@ brews:
   - # Name template of the recipe
     name: gon
     folder: Formula
-    tap:
+    repository:
       owner: Bearer
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
