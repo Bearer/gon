@@ -220,7 +220,8 @@ Supported configurations:
     * `application_identity` (`string`) - The name or ID of the "Developer ID Application"
       certificate to use to sign applications. This accepts any valid value for the `-s`
       flag for the `codesign` binary on macOS. See `man codesign` for detailed
-      documentation on accepted values.
+      documentation on accepted values. If this isn't set, we'll attempt to read
+      the `AC_APPLICATION_IDENTITY` environment variable as a default.
 
     * `entitlements_file` (`string` _optional_) - The full path to a plist format .entitlements file, used for the `--entitlements` argument to `codesign`
 
