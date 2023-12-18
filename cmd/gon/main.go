@@ -181,6 +181,19 @@ func realMain() int {
 	if len(cfg.Source) > 0 {
 		if cfg.Sign != nil {
 			// Perform codesigning
+			if cfg.Sign.ApplicationIdentity == "" {
+				applicationIdentity, ok := os.LookupEnv("AC_APPLICATION_IDENTITY")
+				if !ok {
+					color.New(color.Bold, color.FgRed).Fprintf(os.Stdout, "❗️ No application_identity provided\n")
+					color.New(color.FgRed).Fprintf(os.Stdout,
+						"An application identity must be specified in the `sign` block or\n"+
+							"it must exist in the environment as AC_APPLICATION_IDENTITY,\n"+
+							"otherwise we won't be able to sign your files.\n")
+					return 1
+				}
+
+				cfg.Sign.ApplicationIdentity = applicationIdentity
+			}
 			color.New(color.Bold).Fprintf(os.Stdout, "==> %s  Signing files...\n", iconSign)
 			err = sign.Sign(context.Background(), &sign.Options{
 				Files:        cfg.Source,
