@@ -64,7 +64,7 @@ type Notarize struct {
 type Sign struct {
 	// ApplicationIdentity is the ID or name of the certificate to
 	// use for signing binaries. This is used for all binaries in "source".
-	ApplicationIdentity string `hcl:"application_identity"`
+	ApplicationIdentity string `hcl:"application_identity,optional"`
 	// Specify a path to an entitlements file in plist format
 	EntitlementsFile string `hcl:"entitlements_file,optional"`
 }
