@@ -9,7 +9,7 @@ import (
 
 	"github.com/fatih/color"
 
-	"github.com/mitchellh/gon/notarize"
+	"github.com/bearer/gon/notarize"
 )
 
 // statusHuman implements notarize.Status and outputs information to

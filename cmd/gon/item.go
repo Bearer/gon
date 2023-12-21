@@ -8,9 +8,9 @@ import (
 	"github.com/fatih/color"
 	"github.com/hashicorp/go-hclog"
 
-	"github.com/mitchellh/gon/internal/config"
-	"github.com/mitchellh/gon/notarize"
-	"github.com/mitchellh/gon/staple"
+	"github.com/bearer/gon/internal/config"
+	"github.com/bearer/gon/notarize"
+	"github.com/bearer/gon/staple"
 )
 
 // item represents an item to notarize.
