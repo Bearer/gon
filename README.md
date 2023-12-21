@@ -19,7 +19,6 @@ gon helps you automate the process of notarization.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Features](#features)
 - [Example](#example)
 - [Installation](#installation)
@@ -38,17 +37,14 @@ gon helps you automate the process of notarization.
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-
 ## Features
 
-  * Code sign one or multiple files written in any language
-  * Package signed files into a dmg or zip
-  * Notarize packages and wait for the notarization to complete
-  * Concurrent notarization for multiple output formats
-  * Stapling notarization tickets to supported formats (dmg) so that
+- Code sign one or multiple files written in any language
+- Package signed files into a dmg or zip
+- Notarize packages and wait for the notarization to complete
+- Concurrent notarization for multiple output formats
+- Stapling notarization tickets to supported formats (dmg) so that
     Gatekeeper validation works offline.
-
-See [roadmap](#roadmap) for features that we want to support but don't yet.
 
 ## Example
 
@@ -60,10 +56,10 @@ The example below runs `gon` against itself to generate a zip and dmg.
 
 The easiest way to install `gon` is via [Homebrew](https://brew.sh):
 
-    $ brew install mitchellh/gon/gon
+    brew install Bearer/tap/gon
 
 You may also download the appropriate release for your platform
-from the [releases page](https://github.com/mitchellh/gon/releases).
+from the [releases page](https://github.com/Bearer/gon/releases).
 These are all signed and notarized to run out of the box on macOS 10.15+.
 
 You can also compile from source using Go 1.13 or later using standard
@@ -80,7 +76,7 @@ signing, notarization, and packaging all require tools that are only available
 on macOS machines.
 
 ```
-$ gon [flags] [CONFIG]
+gon [flags] [CONFIG]
 ```
 
 When executed, `gon` will sign, package, and notarize configured files
@@ -126,7 +122,7 @@ To verify you did this correctly, you can inspect your keychain:
 
 ```sh
 $ security find-identity -v
-  1) 97E4A93EAA8BAC7A8FD2383BFA459D2898100E56 "Developer ID Application: Mitchell Hashimoto (GK79KXBF4F)"
+  1) 359452C7CD2B5F8A64059FF1C130B105F235BEAF "Developer ID Application: Bearer Inc (5T2VP4YAG8)"
      1 valid identities found
 ```
 
@@ -143,127 +139,126 @@ format is [HCL](https://github.com/hashicorp/hcl/tree/hcl2) or JSON.
 Example:
 
 ```hcl
-source = ["./terraform"]
-bundle_id = "com.mitchellh.example.terraform"
+source = ["./example"]
+bundle_id = "com.bearer.example"
 
 apple_id {
-  username = "mitchell@example.com"
-  provider = "UL304B4VGY"
+  username = "bearer@example.com"
+  provider = "5T2VP4YAG8"
 }
 
 sign {
-  application_identity = "Developer ID Application: Mitchell Hashimoto"
+  application_identity = "Developer ID Application: Bearer Inc"
 }
 
 dmg {
-  output_path = "terraform.dmg"
-  volume_name = "Terraform"
+  output_path = "example.dmg"
+  volume_name = "Example"
 }
 
 zip {
-  output_path = "terraform.zip"
+  output_path = "example.zip"
 }
 ```
 
 ```json
 {
-    "source" : ["./terraform"],
-    "bundle_id" : "com.mitchellh.example.terraform",
+    "source" : ["./example"],
+    "bundle_id" : "com.bearer.example",
     "apple_id": {
-        "username" : "mitchell@example.com",
-        "provider":  "UL304B4VGY"
+        "username" : "bearer@example.com",
+        "provider":  "5T2VP4YAG8"
     },
     "sign" :{
-        "application_identity" : "Developer ID Application: Mitchell Hashimoto"
+        "application_identity" : "Developer ID Application: Bearer Inc"
     },
     "dmg" :{
-        "output_path":  "terraform.dmg",
-        "volume_name":  "Terraform"
+        "output_path":  "example.dmg",
+        "volume_name":  "Example"
     },
     "zip" :{
-        "output_path" : "terraform.zip"
+        "output_path" : "example.zip"
     }
 }
 ```
 
 Supported configurations:
 
-  * `source` (`array<string>`) - A list of files to sign, package, and
+- `source` (`array<string>`) - A list of files to sign, package, and
     notarize. If you want to sign multiple files with different identities
     or into different packages, then you should invoke `gon` with separate
     configurations. This is optional if you're using the notarization-only
-	mode with the `notarize` block.
+ mode with the `notarize` block.
 
-  * `bundle_id` (`string`) - The [bundle ID](https://cocoacasts.com/what-are-app-ids-and-bundle-identifiers/)
+- `bundle_id` (`string`) - The [bundle ID](https://cocoacasts.com/what-are-app-ids-and-bundle-identifiers/)
     for your application. You should choose something unique for your application.
     You can also [register these with Apple](https://developer.apple.com/account/resources/identifiers/list).
     This is optional if you're using the notarization-only
-	mode with the `notarize` block.
+ mode with the `notarize` block.
 
-  * `apple_id` - Settings related to the Apple ID to use for notarization.
+- `apple_id` - Settings related to the Apple ID to use for notarization.
 
-    * `username` (`string`) - The Apple ID username, typically an email address.
+  - `username` (`string`) - The Apple ID username, typically an email address.
       This will default to the `AC_USERNAME` environment variable if not set.
 
-    * `password` (`string`) - The password for the associated Apple ID.
+  - `password` (`string`) - The password for the associated Apple ID.
       This will default to the `AC_PASSWORD` environment variable if not set.
 
       **NOTE**: If you have 2FA enabled, the password must be an application password, not
       your normal apple id password. See [Troubleshooting](#troubleshooting) for details.
 
-    * `provider` (`string`) - The App Store Connect provider when using
+  - `provider` (`string`) - The App Store Connect provider when using
       multiple teams within App Store Connect. If this isn't set, we'll attempt
       to read the `AC_PROVIDER` environment variable as a default.
 
-  * `sign` - Settings related to signing files.
+- `sign` - Settings related to signing files.
 
-    * `application_identity` (`string`) - The name or ID of the "Developer ID Application"
+  - `application_identity` (`string`) - The name or ID of the "Developer ID Application"
       certificate to use to sign applications. This accepts any valid value for the `-s`
       flag for the `codesign` binary on macOS. See `man codesign` for detailed
       documentation on accepted values. If this isn't set, we'll attempt to read
       the `AC_APPLICATION_IDENTITY` environment variable as a default.
 
-    * `entitlements_file` (`string` _optional_) - The full path to a plist format .entitlements file, used for the `--entitlements` argument to `codesign`
+  - `entitlements_file` (`string` _optional_) - The full path to a plist format .entitlements file, used for the `--entitlements` argument to `codesign`
 
-  * `dmg` (_optional_) - Settings related to creating a disk image (dmg) as output.
+- `dmg` (_optional_) - Settings related to creating a disk image (dmg) as output.
     This will only be created if this is specified. The dmg will also have the
     notarization ticket stapled so that it can be verified offline and
     _do not_ require internet to use.
 
-    * `output_path` (`string`) - The path to create the zip archive. If this path
+  - `output_path` (`string`) - The path to create the zip archive. If this path
       already exists, it will be overwritten. All files in `source` will be copied
       into the root of the zip archive.
 
-    * `volume_name` (`string`) - The name of the mounted dmg that shows up
+  - `volume_name` (`string`) - The name of the mounted dmg that shows up
       in finder, the mounted file path, etc.
 
-  * `zip` (_optional_) - Settings related to creating a zip archive as output. A zip archive
+- `zip` (_optional_) - Settings related to creating a zip archive as output. A zip archive
     will only be created if this is specified. Note that zip archives don't support
     stapling, meaning that files within the notarized zip archive will require an
     internet connection to verify on first use.
 
-    * `output_path` (`string`) - The path to create the zip archive. If this path
+  - `output_path` (`string`) - The path to create the zip archive. If this path
       already exists, it will be overwritten. All files in `source` will be copied
       into the root of the zip archive.
 
 Notarization-only mode:
 
-  * `notarize` (_optional_) - Settings for notarizing already built files.
+- `notarize` (_optional_) - Settings for notarizing already built files.
     This is an alternative to using the `source` option. This option can be
     repeated to notarize multiple files.
 
-    * `path` (`string`) - The path to the file to notarize. This must be
+  - `path` (`string`) - The path to the file to notarize. This must be
       one of Apple's supported file types for notarization: dmg, pkg, app, or
       zip.
 
-    * `bundle_id` (`string`) - The bundle ID to use for this notarization.
+  - `bundle_id` (`string`) - The bundle ID to use for this notarization.
       This is used instead of the top-level `bundle_id` (which controls the
       value for source-based runs).
 
-    * `staple` (`bool` _optional_) - Controls if `stapler staple` should run
+  - `staple` (`bool` _optional_) - Controls if `stapler staple` should run
       if notarization succeeds. This should only be set for filetypes that
       support it (dmg, pkg, or app).
-
 
 ### Notarization-Only Configuration
 
@@ -285,26 +280,26 @@ Example in HCL and then the identical configuration in JSON:
 
 ```hcl
 notarize {
-  path = "/path/to/terraform.pkg"
-  bundle_id = "com.mitchellh.example.terraform"
+  path = "/path/to/example.pkg"
+  bundle_id = "com.bearer.example"
   staple = true
 }
 
 apple_id {
-  username = "mitchell@example.com"
+  username = "bearer@example.com"
 }
 ```
 
 ```json
 {
   "notarize": [{
-    "path": "/path/to/terraform.pkg",
-    "bundle_id": "com.mitchellh.example.terraform",
+    "path": "/path/to/example.pkg",
+    "bundle_id": "com.bearer.example",
     "staple": true
   }],
 
   "apple_id": {
-     "username": "mitchell@example.com",
+     "username": "bearer@example.com",
   }
 }
 ```
@@ -347,8 +342,9 @@ not be colored. This makes it friendlier for output logs.
 
 Example:
 
-    $ gon -log-level=info -log-json ./config.hcl
-	...
+    gon -log-level=info -log-json ./config.hcl
+
+ ...
 
 **Note you must specify _both_ `-log-level` and `-log-json`.** The
 `-log-level` flag enables logging in general. An `info` level is enough
@@ -397,7 +393,7 @@ signs:
     # you'll need to have gon on PATH
     cmd: gon
     # you can follow the gon docs to properly create the gon.hcl config file:
-    # https://github.com/mitchellh/gon
+    # https://github.com/Bearer/gon
     args:
     - gon.hcl
     artifacts: all
@@ -407,7 +403,7 @@ To learn more, see the [GoReleaser documentation](https://goreleaser.com/customi
 
 ## Go Library
 
-[![Godoc](https://godoc.org/github.com/mitchellh/gon?status.svg)](https://godoc.org/github.com/mitchellh/gon)
+[![Godoc](https://godoc.org/github.com/bearer/gon?status.svg)](https://godoc.org/github.com/bearer/gon)
 
 We also expose a supported API for signing, packaging, and notarizing
 files using the Go programming language. Please see the linked Go documentation
@@ -424,11 +420,13 @@ experience.
 
 You likely have Apple 2FA enabled. You'll need to [generate an application password](https://appleid.apple.com/account/manage) and use that instead of your Apple ID password.
 
-## Roadmap
+## Credits
 
-These are some things I'd love to see but aren't currently implemented.
+Mapstructure was originally created by [@mitchellh](https://github.com/mitchellh).
+This is a maintained fork of the original library.
 
-  * Expose more DMG customization so you can set backgrounds, icons, etc.
-    - The underlying script we use already supports this.
-  * Support adding additional files to the zip, dmg packages
-  * Support the creation of '.app' bundles for CLI applications
+Read more about the reasons for the fork [here](https://github.com/mitchellh/gon/commit/2d4f161ccecd1aae878f4416d5ccd622b1b01fdb).
+
+## License
+
+The project is licensed under the [MIT License](LICENSE).

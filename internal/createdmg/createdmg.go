@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/mitchellh/gon/internal/createdmg/bindata"
+	"github.com/bearer/gon/internal/createdmg/bindata"
 )
 
 // Cmd returns an *exec.Cmd that has the Path prepopulated to execute the
