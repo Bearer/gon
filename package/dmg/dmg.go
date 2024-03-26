@@ -49,6 +49,21 @@ type Options struct {
 	// VolumeName is the name of the dmg volume when mounted.
 	VolumeName string
 
+	// Set position the folder window
+	WindowPos []string
+
+	// Set size of the folder window
+	WindowSize []string
+
+	// Set window icons size
+	IconSize string
+
+	// Set position of the file's icon
+	Icon []string
+
+	// make a drop link to Applications, at location x, y
+	AppDropLink []string
+
 	// Logger is the logger to use. If this is nil then no logging will be done.
 	Logger hclog.Logger
 
@@ -90,6 +105,30 @@ func Dmg(ctx context.Context, opts *Options) error {
 	// Inject our files
 	for _, f := range opts.Files {
 		args = append(args, "--add-file", filepath.Base(f), f, "0", "0")
+	}
+
+	if opts.WindowPos != nil {
+		args = append(args, "--window-pos")
+		args = append(args, opts.WindowPos...)
+	}
+
+	if opts.WindowSize != nil {
+		args = append(args, "--window-size")
+		args = append(args, opts.WindowSize...)
+	}
+
+	if opts.IconSize != "" {
+		args = append(args, "--icon-size", opts.IconSize)
+	}
+
+	if opts.Icon != nil {
+		args = append(args, "--icon")
+		args = append(args, opts.Icon...)
+	}
+
+	if opts.AppDropLink != nil {
+		args = append(args, "--app-drop-link")
+		args = append(args, opts.AppDropLink...)
 	}
 
 	// Set our root directory. If one wasn't specified, we create an empty

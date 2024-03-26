@@ -77,6 +77,21 @@ type Dmg struct {
 	// Volume name is the name of the volume that shows up in the title
 	// and sidebar after opening it.
 	VolumeName string `hcl:"volume_name"`
+
+	// Set position the folder window
+	WindowPos []string `hcl:"window_pos,optional"`
+
+	// Set size of the folder window
+	WindowSize []string `hcl:"window_size,optional"`
+
+	// Set window icons size
+	IconSize string `hcl:"icon_size,optional"`
+
+	// Set position of the file's icon
+	Icon []string `hcl:"icon,optional"`
+
+	// make a drop link to Applications, at location x, y
+	AppDropLink []string `hcl:"app_drop_link,optional"`
 }
 
 // Zip are the options for a zip file as output.

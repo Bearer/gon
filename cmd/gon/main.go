@@ -231,10 +231,15 @@ func realMain() int {
 			color.New(color.Bold).Fprintf(os.Stdout, "==> %s  Creating dmg...\n", iconPackage)
 			color.New().Fprintf(os.Stdout, "    This will open Finder windows momentarily.\n")
 			err = dmg.Dmg(context.Background(), &dmg.Options{
-				Files:      cfg.Source,
-				OutputPath: cfg.Dmg.OutputPath,
-				VolumeName: cfg.Dmg.VolumeName,
-				Logger:     logger.Named("dmg"),
+				Files:       cfg.Source,
+				OutputPath:  cfg.Dmg.OutputPath,
+				VolumeName:  cfg.Dmg.VolumeName,
+				WindowPos:   cfg.Dmg.WindowPos,
+				WindowSize:  cfg.Dmg.WindowSize,
+				IconSize:    cfg.Dmg.IconSize,
+				Icon:        cfg.Dmg.Icon,
+				AppDropLink: cfg.Dmg.AppDropLink,
+				Logger:      logger.Named("dmg"),
 			})
 			if err != nil {
 				fmt.Fprintf(os.Stdout, color.RedString("❗️ Error creating dmg:\n\n%s\n", err))
