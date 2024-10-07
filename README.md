@@ -422,7 +422,7 @@ You likely have Apple 2FA enabled. You'll need to [generate an application passw
 
 ## Credits
 
-Mapstructure was originally created by [@mitchellh](https://github.com/mitchellh).
+[gon]([url](https://github.com/mitchellh/gon)) was originally created by [@mitchellh](https://github.com/mitchellh).
 This is a maintained fork of the original library.
 
 Read more about the reasons for the fork [here](https://github.com/mitchellh/gon/commit/2d4f161ccecd1aae878f4416d5ccd622b1b01fdb).
